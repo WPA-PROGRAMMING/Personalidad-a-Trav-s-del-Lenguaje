@@ -1,36 +1,149 @@
+# main.py
 import pandas as pd
-from utils.pln import analizar_respuesta, obtener_embedding
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
+import numpy as np
+import os
 
-# Cargar respuestas
-df = pd.read_csv('data/ejemplo_respuestas_60frases.csv')  # Cada fila: una persona, cada columna: una frase
+from utils.pln import (
+    obtener_embedding,
+    analizar_respuesta,
+    agrupar_respuestas_por_tema, 
+    synonym_replacement,
+    contextual_augmentation
+)
+from model.clustering import (
+    realizar_clustering,
+    visualizar_clusters,
+    exportar_resultados,
+    clustering_jerarquico
+)
+from model.mlp import entrenar_mlp
+from sklearn.preprocessing import LabelEncoder
 
+def aumentar_datos_textuales(df_temas, metodo=None, n_aug=1):
+    """
+    Aplica aumento de datos a las respuestas según método seleccionado.
+    metodo: None, 'synonym_replacement', 'contextual_augmentation'
+    Devuelve DataFrame con filas aumentadas agregadas.
+    """
+    if metodo is None:
+        return df_temas  # Sin cambios
+
+    nuevas_filas = []
+    for _, row in df_temas.iterrows():
+        nueva_fila = row.copy()
+        for tema, respuestas in row.items():
+            if tema in ["ID", "Edad", "Ocupacion", "Estado"]:
+                continue
+            respuestas_aumentadas = []
+            for r in respuestas:
+                if not isinstance(r, str) or not r.strip():
+                    respuestas_aumentadas.append(r)
+                    continue
+                for _ in range(n_aug):
+                    if metodo == "synonym_replacement":
+                        r_aug = synonym_replacement(r)
+                    elif metodo == "contextual_augmentation":
+                        r_aug = contextual_augmentation(r)
+                    else:
+                        r_aug = r
+                    respuestas_aumentadas.append(r_aug)
+            nueva_fila[tema] = respuestas + respuestas_aumentadas
+        nuevas_filas.append(nueva_fila)
+
+    df_aumentado = pd.concat([df_temas, pd.DataFrame(nuevas_filas)], ignore_index=True)
+    return df_aumentado
+
+
+# === CONFIGURACIÓN GENERAL ===
+RUTA_CSV = "data/respuestas.csv"
+OUTPUT_PATH = "output/resultados/"
+
+NUM_CLUSTERS = 4
+
+AUMENTAR_DATOS = True
+METODO_AUMENTO = "contextual_augmentation"  # o "contextual_augmentation" o None o "synonym_replacement"
+N_AUG = 3  # cuántas veces aumentamos por respuesta
+
+# === CARGAR DATOS ===
+print("[INFO] Cargando datos...")
+df = pd.read_csv(RUTA_CSV, encoding="utf-8")
+
+columnas_respuestas = df.columns[4:]  # Asume columnas 0-3: Marca temporal, Edad, Ocupación, Estado
+
+# === AGRUPAR RESPUESTAS POR CATEGORÍA TEMÁTICA ===
+print("[INFO] Agrupando respuestas por categoría temática...")
+df_temas = agrupar_respuestas_por_tema(df, columnas_respuestas)
+
+if AUMENTAR_DATOS and METODO_AUMENTO is not None:
+    print(f"[INFO] Aplicando aumento de datos con método {METODO_AUMENTO}...")
+    df_temas = aumentar_datos_textuales(df_temas, metodo=METODO_AUMENTO, n_aug=N_AUG)
+
+
+# === EMBEDDINGS POR TEMA ===
+print("[INFO] Calculando embeddings por participante (por tema)...")
 embeddings = []
-tiempos_verbales = []
+metadatos = []
 
-for index, row in df.iterrows():
-    respuestas = row[1:]  # Suponiendo que la columna 0 es un ID
-    vectores = [obtener_embedding(r) for r in respuestas]
-    tiempos = [analizar_respuesta(r) for r in respuestas]
+for _, row in df_temas.iterrows():
+    embedding_final = []
+    for tema, respuestas in row.items():
+        if tema in ["ID", "Edad", "Ocupacion", "Estado"]:
+            continue
+        vectores = [obtener_embedding(r) for r in respuestas if isinstance(r, str) and r.strip()]
+        if vectores:
+            promedio = sum(vectores) / len(vectores)
+            embedding_final.extend(promedio.tolist())
+        else:
+            embedding_final.extend([0.0] * 768)
+    embeddings.append(embedding_final)
+    metadatos.append({
+        "ID": row["ID"],
+        "Edad": row["Edad"],
+        "Ocupacion": row["Ocupacion"],
+        "Estado": row["Estado"]
+    })
+    
+embeddings_np = np.array(embeddings)
 
-    promedio_embedding = sum(vectores) / len(vectores)
-    embeddings.append(promedio_embedding)
-    tiempos_verbales.append(max(set(tiempos), key=tiempos.count))  # Tiempo más frecuente
+# === ANÁLISIS LINGÜÍSTICO (TIEMPO VERBAL Y LONGITUD) ===
+print("[INFO] Analizando tiempo verbal y longitud por tema...")
+linguistico = []
 
-# Clustering
-kmeans = KMeans(n_clusters=4, random_state=42)
-labels = kmeans.fit_predict(embeddings)
+for _, row in df_temas.iterrows():
+    resumen = {"ID": row["ID"], "Edad": row["Edad"]}
+    for tema, respuestas in row.items():
+        if tema in ["ID", "Edad", "Ocupacion", "Estado"]:
+            continue
 
-# Visualización rápida
-pca = PCA(n_components=2)
-coords = pca.fit_transform(embeddings)
+        tiempos = [analizar_respuesta(r)['tiempo_verbal'] for r in respuestas if isinstance(r, str)]
+        longitudes = [analizar_respuesta(r)['longitud'] for r in respuestas if isinstance(r, str)]
 
-plt.figure(figsize=(8, 6))
-plt.scatter(coords[:, 0], coords[:, 1], c=labels, cmap='viridis')
-plt.title('Clustering de Rasgos de Personalidad')
-plt.xlabel('Componente 1')
-plt.ylabel('Componente 2')
-plt.colorbar(label='Cluster')
-plt.show()
+        resumen[f"{tema}_pasado"] = tiempos.count("pasado")
+        resumen[f"{tema}_presente"] = tiempos.count("presente")
+        resumen[f"{tema}_futuro"] = tiempos.count("futuro")
+        resumen[f"{tema}_longitud_promedio"] = sum(longitudes) / len(longitudes) if longitudes else 0
+    linguistico.append(resumen)
+
+    
+df_linguistico = pd.DataFrame(linguistico)
+df_linguistico.to_csv(os.path.join(OUTPUT_PATH, "resumen_linguistico.csv"), index=False)
+
+# === CLUSTERING ===
+print("[INFO] Realizando clustering KMeans...")
+etiquetas_kmeans, modelo_kmeans = realizar_clustering(embeddings_np, n_clusters=NUM_CLUSTERS)
+
+print("[INFO] Realizando clustering Jerárquico...")
+etiquetas_jer, modelo_jer = clustering_jerarquico(embeddings_np, n_clusters=NUM_CLUSTERS)
+
+print("[INFO] Visualizando distribución de clusters...")
+visualizar_clusters(embeddings_np, etiquetas_kmeans, OUTPUT_PATH)  # usar embeddings_np y etiquetas_kmeans
+
+print("[INFO] Exportando metadatos + clusters...")
+exportar_resultados(metadatos, etiquetas_kmeans, OUTPUT_PATH)
+
+# === Entrenamiento MLP ===
+print("[INFO] Entrenando modelo MLP para clasificación...")
+etiquetas_codificadas = LabelEncoder().fit_transform(etiquetas_kmeans)  # usar etiquetas_kmeans
+mlp_model = entrenar_mlp(embeddings_np, etiquetas_codificadas, output_path=OUTPUT_PATH)
+
+print("Proceso completado. Revisa los resultados en:", OUTPUT_PATH)
