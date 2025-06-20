@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
 # Cargar respuestas
-df = pd.read_csv('/home/merli-nx19/Documentos/FINAL_SEMESTRE/data/ejemplo_respuestas_60frases.csv')  # Cada fila: una persona, cada columna: una frase
+df = pd.read_csv('./data/ejemplo_respuestas_60frases.csv')  # Cada fila: una persona, cada columna: una frase
 
 embeddings = []
 tiempos_verbales = []
