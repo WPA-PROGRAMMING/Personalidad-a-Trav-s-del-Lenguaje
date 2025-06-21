@@ -1,8 +1,9 @@
 # main.py
 import pandas as pd
 import numpy as np
+import torch 
+import joblib
 import os
-
 from utils.pln import (
     obtener_embedding,
     analizar_respuesta,
@@ -14,10 +15,20 @@ from model.clustering import (
     realizar_clustering,
     visualizar_clusters,
     exportar_resultados,
-    clustering_jerarquico
+    clustering_jerarquico,
+    graficar_dendrograma
 )
+from utils.inferencia import inferir_rasgos_por_area
 from model.mlp import entrenar_mlp
 from sklearn.preprocessing import LabelEncoder
+
+
+# Configuración para usar GPU si está disponible
+device = torch.device("cuda") 
+
+# Vacía la caché de la GPU antes de cargar el modelo (opcional pero útil)
+if device.type == "cuda":
+    torch.cuda.empty_cache()
 
 def aumentar_datos_textuales(df_temas, metodo=None, n_aug=1):
     """
@@ -58,7 +69,7 @@ def aumentar_datos_textuales(df_temas, metodo=None, n_aug=1):
 RUTA_CSV = "data/respuestas.csv"
 OUTPUT_PATH = "output/resultados/"
 
-NUM_CLUSTERS = 4
+NUM_CLUSTERS = 5
 
 AUMENTAR_DATOS = True
 METODO_AUMENTO = "contextual_augmentation"  # o "contextual_augmentation" o None o "synonym_replacement"
@@ -66,8 +77,7 @@ N_AUG = 3  # cuántas veces aumentamos por respuesta
 
 # === CARGAR DATOS ===
 print("[INFO] Cargando datos...")
-df = pd.read_csv(RUTA_CSV, encoding="utf-8")
-
+df = pd.read_csv(RUTA_CSV, encoding="utf-8", sep=",", quotechar='"', on_bad_lines='skip')
 columnas_respuestas = df.columns[4:]  # Asume columnas 0-3: Marca temporal, Edad, Ocupación, Estado
 
 # === AGRUPAR RESPUESTAS POR CATEGORÍA TEMÁTICA ===
@@ -135,6 +145,10 @@ etiquetas_kmeans, modelo_kmeans = realizar_clustering(embeddings_np, n_clusters=
 print("[INFO] Realizando clustering Jerárquico...")
 etiquetas_jer, modelo_jer = clustering_jerarquico(embeddings_np, n_clusters=NUM_CLUSTERS)
 
+# === GRAFICAR DENDROGRAMA PARA ANÁLISIS DE CLÚSTERES ===
+print("[INFO] Graficando dendrograma jerárquico para sugerir número de clusters...")
+graficar_dendrograma(embeddings_np, output_path=OUTPUT_PATH)
+
 print("[INFO] Visualizando distribución de clusters...")
 visualizar_clusters(embeddings_np, etiquetas_kmeans, OUTPUT_PATH)  # usar embeddings_np y etiquetas_kmeans
 
@@ -145,5 +159,25 @@ exportar_resultados(metadatos, etiquetas_kmeans, OUTPUT_PATH)
 print("[INFO] Entrenando modelo MLP para clasificación...")
 etiquetas_codificadas = LabelEncoder().fit_transform(etiquetas_kmeans)  # usar etiquetas_kmeans
 mlp_model = entrenar_mlp(embeddings_np, etiquetas_codificadas, output_path=OUTPUT_PATH)
+
+print("[INFO] Calculando probabilidades de rasgos psicológicos por área temática...")
+df_rasgos = inferir_rasgos_por_area(df_temas)
+
+#print(df_rasgos.head())  # para revisar resultados
+
+# Puedes combinar df_rasgos con df_temas para análisis o exportar a CSV
+df_completo = df_temas.merge(df_rasgos, on='ID', how='left')
+df_completo.to_csv("output/resultados/resultado_con_rasgos.csv", index=False)
+
+# === GUARDAR MODELO ENTRENADO Y OBJETOS DE APOYO ===
+print("[INFO] Guardando modelo entrenado...")
+
+mlp_model = entrenar_mlp(embeddings_np, etiquetas_codificadas, output_path=OUTPUT_PATH)
+label_encoder = LabelEncoder()
+etiquetas_codificadas = label_encoder.fit_transform(etiquetas_kmeans)
+joblib.dump(mlp_model, "output/modelo_personalidad.pkl")
+joblib.dump(label_encoder, "output/label_encoder.pkl")
+
+print("[INFO] Modelo y encoder guardados correctamente.")
 
 print("Proceso completado. Revisa los resultados en:", OUTPUT_PATH)

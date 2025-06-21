@@ -8,6 +8,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from scipy.cluster.hierarchy import linkage, dendrogram
 import torch
 
 def clustering_jerarquico(embeddings, n_clusters=3):
@@ -82,3 +83,20 @@ def exportar_resultados(metadatos, etiquetas, output_path):
     resultado_df = metadatos.copy()
     resultado_df["Cluster"] = etiquetas
     resultado_df.to_csv(os.path.join(output_path, "resultado_clusters.csv"), index=False)
+
+def graficar_dendrograma(embeddings, output_path="output/resultados/"):
+    """
+    Genera y guarda un dendrograma jerárquico para ayudar a decidir el número de clusters.
+    """
+    linkage_matrix = linkage(embeddings, method='ward')  # método ward = minimiza varianza intra-cluster
+
+    plt.figure(figsize=(12, 6))
+    dendrogram(linkage_matrix, truncate_mode='level', p=10)
+    plt.title("Dendrograma jerárquico")
+    plt.xlabel("Índices de muestra o clústeres")
+    plt.ylabel("Distancia (Ward)")
+    plt.tight_layout()
+    
+    os.makedirs(output_path, exist_ok=True)
+    plt.savefig(os.path.join(output_path, "dendrograma.png"))
+    plt.close()

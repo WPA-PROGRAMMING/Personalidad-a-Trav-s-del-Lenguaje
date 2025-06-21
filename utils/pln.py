@@ -21,15 +21,21 @@ except OSError:
     nlp = spacy.load("es_core_news_md")
 
 # Configuración para usar GPU si está disponible
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu") 
+
+'''
+device = torch.device("cpu") 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu") 
+'''
 
 # Cargar modelo BERT español (U. de Chile)
 tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-cased")
-model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-cased").to(device)
+model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-cased").to(device) # device GPU "cpu"
 model.eval()
 
 # Carga pipeline para análisis de sentimiento (puedes elegir otro modelo)
-sentiment_analyzer = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment", device=0 if torch.cuda.is_available() else -1)
+# Cambiar device = 0 para GPU o -1 para CPU
+sentiment_analyzer = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment", device=-1 if torch.cuda.is_available() else -1)
 
 # Inicializar fill-mask para aumento contextual
 fill_mask = pipeline(
