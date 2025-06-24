@@ -71,9 +71,9 @@ OUTPUT_PATH = "output/resultados/"
 
 NUM_CLUSTERS = 5
 
-AUMENTAR_DATOS = False
-METODO_AUMENTO = "None"  # o "contextual_augmentation" o None o "synonym_replacement"
-N_AUG = 0  # cuántas veces aumentamos por respuesta
+AUMENTAR_DATOS = True
+METODO_AUMENTO = "synonym_replacement"  # o "contextual_augmentation" o None o "synonym_replacement"
+N_AUG = 1  # cuántas veces aumentamos por respuesta
 
 # === CARGAR DATOS ===
 print("[INFO] Cargando datos...")
