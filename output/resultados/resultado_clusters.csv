@@ -1,56 +1,101 @@
 ID,Edad,Ocupacion,Estado,Cluster
-1,21,,Tlaxcala,2
-2,21,,Tlaxcala,2
-3,22,,Tlaxcala ,0
-4,27,,Tlaxcala,2
-5,20,,Tlaxcala ,2
-6,21,,Puebla ,2
-7,21,,Tlaxcala ,2
-8,19,,Tlaxcala ,0
- +ACI-,No siempre es unida ,,Es la persona a la que m+//3//Q-s confianza le tengo ,0
-+ACI-,No hacer algo que quiero ,, pero otras veces no se dan cuenta de que no estoy.,0
-+ACI-,+ACI-Fue una ocasi+//3//Q-n en que me perd+//3//Q- en Walmart y sent+//3//Q- mucho miedo,,+ACI-Es cuando generalizan o juzgan sin conocer bien la situaci+//3//Q-n,0
-9,50,,Tlaxcala,4
-10,18,,Tlaxcala ,2
-11,19,,Tlaxcala ,2
-El no ser m+//3//Q-s maduro al conocer una Persona +ACI-,No sea tan perfeccionista ,,Es ser famoso ,0
-12,27,,Tlaxcala,2
-13,21,,Puebla ,2
-14,21,,Tlaxcala,2
-16,21,,Tlaxcala,2
-17,19,,Tlaxcala ,2
-18,20,,Tlaxcala,3
-19,21,,Lejos,3
-20,36,,Tlaxcala ,0
-21,37,,Tlaxcala ,2
-22,20,,Tlaxcala,4
-23,21,,Tlaxcala ,4
-24,27,,Ciudad de M+//3//Q-xico,4
-25,26,,Tlaxcala ,2
-26,67,,Tlaxcala ,3
-27,22,,Estado De M+//3//Q-xico ,2
-28,22,,Edomex ,3
-29,38,,Washinton estate,3
-30,69,,Guatemala,1
-31,17,,Tlaxcala ,1
-32,45,,Estado de M+//3//Q-xico ,0
-33,44,,Apizaco Tlaxcala ,3
-+ACI-,Ser+//3//Q-a solo con mi pareja ,,Sea sincera ,2
-34,20,,Tlaxcala,3
-35,50,,CDMX ,3
-36,34,,Estado de mexico,3
-37,20,,Tlaxcala ,2
-38,19,,Narnia,2
-39,21,,Puebla ,2
-+ACI-,,,,0
-40,21,,Tlaxcala,4
-41,20,,Tlaxcala,2
-42,24,,Puebla ,2
-43,31,,Tlaxcala,2
-44,21,,Tlaxcala,0
-45,20,,Tlaxcala ,3
-46,30,,Tlaxcala,0
-47,20,,Tlaxcala ,0
-48,16,,M+//3//Q-xico ,2
-49,20,,Tlaxcala ,4
-50,20,,Tlaxcala ,2
+1,21,Estudiante,Tlaxcala,0
+2,21,Estudiante,Tlaxcala,2
+3,22,Egresada ,Tlaxcala ,1
+4,27,Estudiante,Tlaxcala,3
+5,20,Estudiante ,Tlaxcala ,2
+6,21,Empleado,Puebla ,1
+7,21,Estudiante,Tlaxcala ,0
+8,19,Estudiante,Tlaxcala ,4
+9,50,Estudiante,Tlaxcala,3
+10,18,Estudiante ,Tlaxcala ,2
+11,19,Estudiante,Tlaxcala ,4
+12,27,Médico ,Tlaxcala,2
+13,21,Estudiante ,Puebla ,2
+14,21,Estudiante,Tlaxcala,1
+15,20,Estilista ,Tlaxcala,2
+16,21,Estudiante ,Tlaxcala,3
+17,19,Estudiante ,Tlaxcala ,4
+18,20,Estudiante,Tlaxcala,1
+19,21,Estudiante,Lejos,2
+20,36,Empleado,Tlaxcala ,4
+21,37,Investigador ,Tlaxcala ,2
+22,20,Estudiante,Tlaxcala,3
+23,21,Estudiante,Tlaxcala ,3
+24,27,Médico,Ciudad de México,3
+25,26,Empleada ,Tlaxcala ,2
+26,67,Pensionado ,Tlaxcala ,2
+27,22,Trabajado ,Estado De México ,3
+28,22,Estudiante ,Edomex ,2
+29,38,Delivery driver,Washinton estate,2
+30,69,Nini,Guatemala,3
+31,17,Estudiante,Tlaxcala ,3
+32,45,Hogar ,Estado de México ,4
+33,44,Comerciante ,Apizaco Tlaxcala ,2
+34,20,Estudiante,Tlaxcala,4
+35,50,Docente ,CDMX ,2
+36,34,Comerciante,Estado de mexico,2
+37,20,Estudiante,Tlaxcala ,2
+38,19,Estudiambre,Narnia,0
+39,21,Empleado ,Puebla ,4
+40,21,Estudiante,Tlaxcala,3
+41,20,Estudiante ,Tlaxcala,4
+42,24,Médico ,Puebla ,3
+43,31,Estudiante ,Tlaxcala,4
+44,21,Estudiante,Tlaxcala,4
+45,20,Estudiante,Tlaxcala ,2
+46,30,Profe,Tlaxcala,4
+47,20,Estudiante ,Tlaxcala ,4
+48,16,Escuela ,México ,2
+49,20,Estudiante,Tlaxcala ,3
+50,20,Estudiante ,Tlaxcala ,0
+1,21,Estudiante,Tlaxcala,1
+2,21,Estudiante,Tlaxcala,3
+3,22,Egresada ,Tlaxcala ,1
+4,27,Estudiante,Tlaxcala,1
+5,20,Estudiante ,Tlaxcala ,3
+6,21,Empleado,Puebla ,1
+7,21,Estudiante,Tlaxcala ,3
+8,19,Estudiante,Tlaxcala ,4
+9,50,Estudiante,Tlaxcala,3
+10,18,Estudiante ,Tlaxcala ,1
+11,19,Estudiante,Tlaxcala ,4
+12,27,Médico ,Tlaxcala,3
+13,21,Estudiante ,Puebla ,3
+14,21,Estudiante,Tlaxcala,1
+15,20,Estilista ,Tlaxcala,2
+16,21,Estudiante ,Tlaxcala,3
+17,19,Estudiante ,Tlaxcala ,4
+18,20,Estudiante,Tlaxcala,1
+19,21,Estudiante,Lejos,3
+20,36,Empleado,Tlaxcala ,4
+21,37,Investigador ,Tlaxcala ,1
+22,20,Estudiante,Tlaxcala,3
+23,21,Estudiante,Tlaxcala ,3
+24,27,Médico,Ciudad de México,3
+25,26,Empleada ,Tlaxcala ,3
+26,67,Pensionado ,Tlaxcala ,1
+27,22,Trabajado ,Estado De México ,3
+28,22,Estudiante ,Edomex ,1
+29,38,Delivery driver,Washinton estate,3
+30,69,Nini,Guatemala,3
+31,17,Estudiante,Tlaxcala ,1
+32,45,Hogar ,Estado de México ,4
+33,44,Comerciante ,Apizaco Tlaxcala ,3
+34,20,Estudiante,Tlaxcala,4
+35,50,Docente ,CDMX ,3
+36,34,Comerciante,Estado de mexico,2
+37,20,Estudiante,Tlaxcala ,3
+38,19,Estudiambre,Narnia,0
+39,21,Empleado ,Puebla ,4
+40,21,Estudiante,Tlaxcala,3
+41,20,Estudiante ,Tlaxcala,4
+42,24,Médico ,Puebla ,3
+43,31,Estudiante ,Tlaxcala,4
+44,21,Estudiante,Tlaxcala,4
+45,20,Estudiante,Tlaxcala ,1
+46,30,Profe,Tlaxcala,4
+47,20,Estudiante ,Tlaxcala ,4
+48,16,Escuela ,México ,3
+49,20,Estudiante,Tlaxcala ,3
+50,20,Estudiante ,Tlaxcala ,0

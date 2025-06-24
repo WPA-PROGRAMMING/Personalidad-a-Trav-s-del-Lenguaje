@@ -203,54 +203,63 @@ def agrupar_respuestas_por_tema(df, columnas_respuestas):
 
 # === Funciones de aumento de datos ===
 
+
 def synonym_replacement(text, n=1):
     doc = nlp(text)
-    words = [token.text for token in doc if token.pos_ in ["NOUN", "VERB", "ADJ", "ADV"]]
-    if not words:
-        return text
-
-    new_text = text.split()
-    random_words = random.sample(words, min(n, len(words)))
-
-    for word in random_words:
-        syns = wordnet.synsets(word, lang='spa')
-        lemmas = set()
-        for syn in syns:
-            for l in syn.lemmas('spa'):
-                if l.name() != word:
-                    lemmas.add(l.name().replace('_', ' '))
-        if lemmas:
-            synonym = random.choice(list(lemmas))
-            for i, w in enumerate(new_text):
-                if w == word:
-                    new_text[i] = synonym
-                    break
-
-    return " ".join(new_text)
-
-
-def contextual_augmentation(text, n=1):
-    doc = nlp(text)
-    candidates = [token for token in doc if token.pos_ in ["NOUN", "VERB", "ADJ", "ADV"]]
+    # Filtrar tokens válidos para sustitución
+    candidates = [token for token in doc if token.pos_ in {"NOUN", "VERB", "ADJ", "ADV"} and token.is_alpha]
     if not candidates:
         return text
 
-    token_to_mask = random.choice(candidates)
-    token_idx = token_to_mask.i
+    # Seleccionar palabras únicas para reemplazar
+    selected_tokens = random.sample(candidates, min(n, len(candidates)))
+    new_text = text
 
-    words = text.split()
-    if token_idx >= len(words):
+    for token in selected_tokens:
+        word = token.text
+        synsets = wordnet.synsets(word, lang='spa')
+        lemmas = {l.name().replace('_', ' ') for syn in synsets for l in syn.lemmas('spa') if l.name() != word}
+
+        if lemmas:
+            synonym = random.choice(list(lemmas))
+            # Reemplazar usando expresiones regulares para evitar sustituir substrings erróneos
+            pattern = r'\b{}\b'.format(re.escape(word))
+            new_text = re.sub(pattern, synonym, new_text, count=1)
+
+    return new_text.strip()
+
+def contextual_augmentation(text, n=1):
+    doc = nlp(text)
+    candidates = [token for token in doc if token.pos_ in {"NOUN", "VERB", "ADJ", "ADV"} and token.is_alpha]
+    if not candidates:
         return text
 
-    words[token_idx] = fill_mask.tokenizer.mask_token
-    masked_text = " ".join(words)
+    new_text = text
+    attempts = 0
+    replaced = 0
 
-    results = fill_mask(masked_text)
-    for pred in results:
-        if pred['token_str'].strip() != token_to_mask.text:
-            words[token_idx] = pred['token_str'].strip()
-            return " ".join(words)
-    return text
+    while replaced < n and attempts < 5 * n:
+        token_to_mask = random.choice(candidates)
+        idx = token_to_mask.idx
+        end = idx + len(token_to_mask.text)
+
+        masked_text = new_text[:idx] + fill_mask.tokenizer.mask_token + new_text[end:]
+
+        try:
+            predictions = fill_mask(masked_text)
+        except Exception:
+            break
+
+        for pred in predictions:
+            candidate = pred['token_str'].strip()
+            if candidate.lower() != token_to_mask.text.lower():
+                new_text = new_text[:idx] + candidate + new_text[end:]
+                replaced += 1
+                break
+
+        attempts += 1
+
+    return new_text.strip()
 
 
 def aumentar_datos_textuales(df_temas, metodo=None, n_aug=1):
