@@ -26,9 +26,16 @@ class MLPModel(nn.Module):
 
 
 
-def entrenar_mlp(X, y, output_path="output/resultados/", epochs=70, train_size=0.6, val_size=0.2, test_size=0.2, patience=5):  
+def entrenar_mlp(X, y, output_path="output/resultados/", epochs=150, patience=5):  
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") 
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=test_size, random_state=42)
+
+    # 1. Primera división: entrenamiento (60%) y temp (40%)
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.4, random_state=42)
+
+    # 2. Segunda división: validación (20%) y prueba (20%) de la parte temporal
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+    # Convertir a tensores
     X_train = torch.tensor(X_train, dtype=torch.float32).to(device)
     X_val = torch.tensor(X_val, dtype=torch.float32).to(device)
     y_train = torch.tensor(y_train, dtype=torch.long).to(device)
@@ -62,7 +69,6 @@ def entrenar_mlp(X, y, output_path="output/resultados/", epochs=70, train_size=0
         loss_val.append(val_loss.item())
         print(f"Epoch {epoch+1}/{epochs} - Train Loss: {loss.item():.4f} - Val Loss: {val_loss.item():.4f}")
 
-        # Early stopping
         if val_loss.item() < best_val_loss:
             best_val_loss = val_loss.item()
             best_model_state = model.state_dict()
@@ -77,14 +83,14 @@ def entrenar_mlp(X, y, output_path="output/resultados/", epochs=70, train_size=0
     # Restaurar el mejor modelo
     model.load_state_dict(best_model_state)
 
-    # Evaluación final
+    # Evaluación en conjunto de validación
     model.eval()
     with torch.no_grad():
         val_preds = model(X_val).argmax(dim=1).cpu().numpy()
-        y_true = y_val.cpu().numpy()
-        acc = accuracy_score(y_true, val_preds)
-        cm = confusion_matrix(y_true, val_preds)
-        print(f"Validation Accuracy final (mejor modelo): {acc:.4f}")
+        y_true_val = y_val.cpu().numpy()
+        acc_val = accuracy_score(y_true_val, val_preds)
+        cm_val = confusion_matrix(y_true_val, val_preds)
+        print(f"Validation Accuracy final (mejor modelo): {acc_val:.4f}")
 
     # Guardar resultados
     os.makedirs(output_path, exist_ok=True)
@@ -106,7 +112,7 @@ def entrenar_mlp(X, y, output_path="output/resultados/", epochs=70, train_size=0
 
     # Matriz de confusión
     plt.figure(figsize=(6,5))
-    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+    sns.heatmap(cm_val, annot=True, fmt="d", cmap="Blues")
     plt.xlabel("Predicción")
     plt.ylabel("Verdadero")
     plt.title("Matriz de Confusión en Validación")

@@ -1,61 +1,56 @@
 ID,Edad,Ocupacion,Estado,Cluster
-20/6/2025 8:43:32,21,Estudiante,Tlaxcala,1
-20/6/2025 9:06:02,21,Estudiante,Tlaxcala,3
-20/6/2025 9:06:18,22,Egresada ,Tlaxcala ,4
-20/6/2025 9:15:48,27,Estudiante,Tlaxcala,1
-20/6/2025 9:30:39,20,Estudiante ,Tlaxcala ,1
-20/6/2025 9:35:50,21,Empleado,Puebla ,3
-20/6/2025 9:49:04,21,Estudiante,Tlaxcala ,4
-20/6/2025 9:53:19,19,Estudiante,Tlaxcala ,2
-20/6/2025 10:08:45,50,Estudiante,Tlaxcala,4
-20/6/2025 10:17:57,18,Estudiante ,Tlaxcala ,3
-20/6/2025 10:19:00,19,Estudiante,Tlaxcala ,3
-20/6/2025 10:45:27,27,Médico ,Tlaxcala,3
-20/6/2025 11:01:28,21,Estudiante ,Puebla ,1
-20/6/2025 11:31:30,21,Estudiante,Tlaxcala,4
-20/6/2025 12:20:55,20,Estilista ,Tlaxcala,3
-20/6/2025 12:37:16,21,Estudiante ,Tlaxcala,0
-20/6/2025 13:48:31,19,Estudiante ,Tlaxcala ,3
-20/6/2025 13:59:39,20,Estudiante,Tlaxcala,3
-20/6/2025 14:39:46,21,Estudiante,Lejos,3
-20/6/2025 15:02:08,36,Empleado,Tlaxcala ,3
-20/6/2025 15:21:27,37,Investigador ,Tlaxcala ,1
-20/6/2025 15:29:45,20,Estudiante,Tlaxcala,0
-20/6/2025 16:15:23,21,Estudiante,Tlaxcala ,0
-20/6/2025 16:38:55,27,Médico,Ciudad de México,4
-20/6/2025 16:46:49,26,Empleada ,Tlaxcala ,3
-20/6/2025 17:21:43,67,Pensionado ,Tlaxcala ,3
-20/6/2025 17:39:51,22,Trabajado ,Estado De México ,4
-20/6/2025 17:44:17,22,Estudiante ,Edomex ,3
-20/6/2025 17:45:39,38,Delivery driver,Washinton estate,4
-20/6/2025 18:03:13,69,Nini,Guatemala,4
-20/6/2025 8:43:32,21,Estudiante,Tlaxcala,4
-20/6/2025 9:06:02,21,Estudiante,Tlaxcala,4
-20/6/2025 9:06:18,22,Egresada ,Tlaxcala ,4
-20/6/2025 9:15:48,27,Estudiante,Tlaxcala,4
-20/6/2025 9:30:39,20,Estudiante ,Tlaxcala ,4
-20/6/2025 9:35:50,21,Empleado,Puebla ,4
-20/6/2025 9:49:04,21,Estudiante,Tlaxcala ,4
-20/6/2025 9:53:19,19,Estudiante,Tlaxcala ,2
-20/6/2025 10:08:45,50,Estudiante,Tlaxcala,4
-20/6/2025 10:17:57,18,Estudiante ,Tlaxcala ,4
-20/6/2025 10:19:00,19,Estudiante,Tlaxcala ,3
-20/6/2025 10:45:27,27,Médico ,Tlaxcala,4
-20/6/2025 11:01:28,21,Estudiante ,Puebla ,1
-20/6/2025 11:31:30,21,Estudiante,Tlaxcala,4
-20/6/2025 12:20:55,20,Estilista ,Tlaxcala,3
-20/6/2025 12:37:16,21,Estudiante ,Tlaxcala,0
-20/6/2025 13:48:31,19,Estudiante ,Tlaxcala ,3
-20/6/2025 13:59:39,20,Estudiante,Tlaxcala,4
-20/6/2025 14:39:46,21,Estudiante,Lejos,4
-20/6/2025 15:02:08,36,Empleado,Tlaxcala ,3
-20/6/2025 15:21:27,37,Investigador ,Tlaxcala ,4
-20/6/2025 15:29:45,20,Estudiante,Tlaxcala,4
-20/6/2025 16:15:23,21,Estudiante,Tlaxcala ,0
-20/6/2025 16:38:55,27,Médico,Ciudad de México,4
-20/6/2025 16:46:49,26,Empleada ,Tlaxcala ,4
-20/6/2025 17:21:43,67,Pensionado ,Tlaxcala ,4
-20/6/2025 17:39:51,22,Trabajado ,Estado De México ,4
-20/6/2025 17:44:17,22,Estudiante ,Edomex ,3
-20/6/2025 17:45:39,38,Delivery driver,Washinton estate,4
-20/6/2025 18:03:13,69,Nini,Guatemala,4
+1,21,,Tlaxcala,2
+2,21,,Tlaxcala,2
+3,22,,Tlaxcala ,0
+4,27,,Tlaxcala,2
+5,20,,Tlaxcala ,2
+6,21,,Puebla ,2
+7,21,,Tlaxcala ,2
+8,19,,Tlaxcala ,0
+ +ACI-,No siempre es unida ,,Es la persona a la que m+//3//Q-s confianza le tengo ,0
++ACI-,No hacer algo que quiero ,, pero otras veces no se dan cuenta de que no estoy.,0
++ACI-,+ACI-Fue una ocasi+//3//Q-n en que me perd+//3//Q- en Walmart y sent+//3//Q- mucho miedo,,+ACI-Es cuando generalizan o juzgan sin conocer bien la situaci+//3//Q-n,0
+9,50,,Tlaxcala,4
+10,18,,Tlaxcala ,2
+11,19,,Tlaxcala ,2
+El no ser m+//3//Q-s maduro al conocer una Persona +ACI-,No sea tan perfeccionista ,,Es ser famoso ,0
+12,27,,Tlaxcala,2
+13,21,,Puebla ,2
+14,21,,Tlaxcala,2
+16,21,,Tlaxcala,2
+17,19,,Tlaxcala ,2
+18,20,,Tlaxcala,3
+19,21,,Lejos,3
+20,36,,Tlaxcala ,0
+21,37,,Tlaxcala ,2
+22,20,,Tlaxcala,4
+23,21,,Tlaxcala ,4
+24,27,,Ciudad de M+//3//Q-xico,4
+25,26,,Tlaxcala ,2
+26,67,,Tlaxcala ,3
+27,22,,Estado De M+//3//Q-xico ,2
+28,22,,Edomex ,3
+29,38,,Washinton estate,3
+30,69,,Guatemala,1
+31,17,,Tlaxcala ,1
+32,45,,Estado de M+//3//Q-xico ,0
+33,44,,Apizaco Tlaxcala ,3
++ACI-,Ser+//3//Q-a solo con mi pareja ,,Sea sincera ,2
+34,20,,Tlaxcala,3
+35,50,,CDMX ,3
+36,34,,Estado de mexico,3
+37,20,,Tlaxcala ,2
+38,19,,Narnia,2
+39,21,,Puebla ,2
++ACI-,,,,0
+40,21,,Tlaxcala,4
+41,20,,Tlaxcala,2
+42,24,,Puebla ,2
+43,31,,Tlaxcala,2
+44,21,,Tlaxcala,0
+45,20,,Tlaxcala ,3
+46,30,,Tlaxcala,0
+47,20,,Tlaxcala ,0
+48,16,,M+//3//Q-xico ,2
+49,20,,Tlaxcala ,4
+50,20,,Tlaxcala ,2
