@@ -7,10 +7,7 @@ import ollama
 import sys
 import os
 
-# --- Mueve st.set_page_config() aquí, al inicio del script ---
 st.set_page_config(page_title="Análisis de Perfil Psicológico con IA", layout="wide")
-# --- Fin del movimiento ---
-
 
 # --- Ajuste de Path para Importaciones ---
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'utils')))
@@ -192,29 +189,30 @@ def generar_interpretacion_ollama(perfil_predicho: str, rasgos_df_str: str, resp
     respuestas_formateadas = "\n".join([f"- {k.replace('_', ' ').title()}: {v}" for k, v in respuestas_usuario.items()])
 
     prompt = f"""Eres un psicólogo analítico y empático. Tu tarea es interpretar un perfil psicológico y un análisis de rasgos detallado, y presentarlo de manera comprensiva y humanizada para un usuario, manteniendo un tono profesional pero cercano.
-
-Aquí tienes los resultados del análisis:
-
-**Perfil General Predicho:** {perfil_predicho}
-
-**Análisis Cuantitativo de Rasgos por Área (Probabilidades de 0 a 1):**
-{rasgos_df_str}
-
-**Respuestas Originales del Usuario (para contexto adicional y referencias):**
-{respuestas_formateadas}
-
-Por favor, crea una interpretación detallada y sensible, cubriendo los siguientes puntos esenciales:
-1.  **Introducción Empática:** Comienza reconociendo el esfuerzo y la apertura del usuario al compartir sus respuestas.
-2.  **Análisis del Perfil General:** Explica de forma sencilla y clara qué implica el perfil '{perfil_predicho}'. Ayuda al usuario a entender su clasificación general.
-3.  **Interpretación por Áreas (Familiar, Laboral, Emocional, Social):**
-    * Para cada área, analiza los rasgos más predominantes (aquellos con probabilidades más altas) y, si es relevante, los rasgos con probabilidades muy bajas.
-    * Explica brevemente qué significa cada rasgo en el contexto específico de esa área (ej., "una alta proactividad en el ámbito laboral podría indicar...").
-    * **Crucial:** Utiliza las respuestas originales del usuario (mencionadas en "Respuestas Originales del Usuario") para contextualizar o ejemplificar tus observaciones. Esto hace el análisis mucho más personal y creíble.
-4.  **Patrones y Conexiones:** Identifica y resume cualquier patrón o tendencia interesante que observes en los rasgos o entre las diferentes áreas.
-5.  **Cierre Constructivo y Empoderador:** Finaliza con un mensaje de apoyo, que fomente la auto-reflexión o sugiera áreas de posible crecimiento personal, sin ser prescriptivo ni diagnosticar. El objetivo es empoderar al usuario.
-
-Asegúrate de que la interpretación tenga un **tono cercano, comprensivo y no técnico**, como si un profesional humano estuviera hablando. No uses jerga psicológica compleja. La extensión total debe ser de al menos 300 palabras para asegurar un análisis completo y matizado.
-"""
+            
+            Aquí tienes los resultados del análisis:
+            
+            **Perfil General Predicho:** {perfil_predicho}
+            
+            **Análisis Cuantitativo de Rasgos por Área (Probabilidades de 0 a 1):**
+            {rasgos_df_str}
+            
+            **Respuestas Originales del Usuario (para contexto adicional y referencias):**
+            {respuestas_formateadas}
+            
+            Por favor, crea una interpretación detallada y sensible, cubriendo los siguientes puntos esenciales:
+            1.  **Introducción Empática:** Comienza reconociendo el esfuerzo y la apertura del usuario al compartir sus respuestas.
+            2.  **Análisis del Perfil General:** Explica de forma sencilla y clara qué implica el perfil '{perfil_predicho}'. Ayuda al usuario a entender su clasificación general.
+            3.  **Interpretación por Áreas (Familiar, Laboral, Emocional, Social):**
+                * Para cada área, analiza los rasgos más predominantes (aquellos con probabilidades más altas) y, si es relevante, los rasgos con probabilidades muy bajas.
+                * Explica brevemente qué significa cada rasgo en el contexto específico de esa área (ej., "una alta proactividad en el ámbito laboral podría indicar...").
+                * **Crucial:** Utiliza las respuestas originales del usuario (mencionadas en "Respuestas Originales del Usuario") para contextualizar o ejemplificar tus observaciones. Esto hace el análisis mucho más personal y creíble.
+            4.  **Patrones y Conexiones:** Identifica y resume cualquier patrón o tendencia interesante que observes en los rasgos o entre las diferentes áreas.
+            5.  **Inferir Rasgos del "Big Five":** Basado en toda la información proporcionada (perfil general, análisis de rasgos por área y respuestas originales), haz una inferencia sobre cuál de los "Cinco Grandes" rasgos de personalidad (Apertura a la Experiencia, Conciencia, Extraversión, Amabilidad, Neuroticismo/Estabilidad Emocional) parece ser el más **predominante** o **relevante** en el usuario. Justifica brevemente por qué consideras ese rasgo el más destacado, haciendo referencia a los datos anteriores. Si más de uno es relevante, puedes mencionar hasta dos.
+            6.  **Cierre Constructivo y Empoderador:** Finaliza con un mensaje de apoyo, que fomente la auto-reflexión o sugiera áreas de posible crecimiento personal, sin ser prescriptivo ni diagnosticar. El objetivo es empoderar al usuario.
+            
+            Asegúrate de que la interpretación tenga un **tono cercano, comprensivo y no técnico**, como si un profesional humano estuviera hablando. No uses jerga psicológica compleja. La extensión total debe ser de al menos 300 palabras para asegurar un análisis completo y matizado.
+            """
 
     try:
         response = ollama.chat(model='gemma3:1b', messages=[{'role': 'user', 'content': prompt}])

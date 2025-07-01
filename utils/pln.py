@@ -202,8 +202,6 @@ def agrupar_respuestas_por_tema(df, columnas_respuestas):
     return pd.DataFrame(data)
 
 # === Funciones de aumento de datos ===
-
-
 def synonym_replacement(text, n=1):
     doc = nlp(text)
     # Filtrar tokens válidos para sustitución
