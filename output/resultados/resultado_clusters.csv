@@ -1,11 +1,11 @@
 ID,Edad,Ocupacion,Estado,Cluster
 1,21,Estudiante,Tlaxcala,2
 2,21,Estudiante,Tlaxcala,2
-3,22,Egresada ,Tlaxcala ,4
+3,22,Egresada ,Tlaxcala ,3
 4,27,Estudiante,Tlaxcala,4
 5,20,Estudiante ,Tlaxcala ,4
 6,21,Empleado,Puebla ,3
-7,21,Estudiante,Tlaxcala ,4
+7,21,Estudiante,Tlaxcala ,2
 8,19,Estudiante,Tlaxcala ,3
 9,50,Estudiante,Tlaxcala,4
 10,18,Estudiante ,Tlaxcala ,2
@@ -16,7 +16,7 @@ ID,Edad,Ocupacion,Estado,Cluster
 15,20,Estilista ,Tlaxcala,2
 16,21,Estudiante ,Tlaxcala,4
 17,19,Estudiante ,Tlaxcala ,3
-18,20,Estudiante,Tlaxcala,1
+18,20,Estudiante,Tlaxcala,3
 19,21,Estudiante,Lejos,2
 20,36,Empleado,Tlaxcala ,3
 21,37,Investigador ,Tlaxcala ,1
@@ -40,7 +40,7 @@ ID,Edad,Ocupacion,Estado,Cluster
 39,21,Empleado ,Puebla ,3
 40,21,Estudiante,Tlaxcala,4
 41,20,Estudiante ,Tlaxcala,3
-42,24,Médico ,Puebla ,4
+42,24,Médico ,Puebla ,1
 43,31,Estudiante ,Tlaxcala,3
 44,21,Estudiante,Tlaxcala,3
 45,20,Estudiante,Tlaxcala ,1
@@ -51,11 +51,11 @@ ID,Edad,Ocupacion,Estado,Cluster
 50,20,Estudiante ,Tlaxcala ,0
 1,21,Estudiante,Tlaxcala,2
 2,21,Estudiante,Tlaxcala,2
-3,22,Egresada ,Tlaxcala ,4
+3,22,Egresada ,Tlaxcala ,3
 4,27,Estudiante,Tlaxcala,4
 5,20,Estudiante ,Tlaxcala ,4
 6,21,Empleado,Puebla ,3
-7,21,Estudiante,Tlaxcala ,4
+7,21,Estudiante,Tlaxcala ,2
 8,19,Estudiante,Tlaxcala ,3
 9,50,Estudiante,Tlaxcala,4
 10,18,Estudiante ,Tlaxcala ,2
@@ -66,7 +66,7 @@ ID,Edad,Ocupacion,Estado,Cluster
 15,20,Estilista ,Tlaxcala,2
 16,21,Estudiante ,Tlaxcala,4
 17,19,Estudiante ,Tlaxcala ,3
-18,20,Estudiante,Tlaxcala,1
+18,20,Estudiante,Tlaxcala,3
 19,21,Estudiante,Lejos,2
 20,36,Empleado,Tlaxcala ,3
 21,37,Investigador ,Tlaxcala ,1
@@ -90,7 +90,7 @@ ID,Edad,Ocupacion,Estado,Cluster
 39,21,Empleado ,Puebla ,3
 40,21,Estudiante,Tlaxcala,4
 41,20,Estudiante ,Tlaxcala,3
-42,24,Médico ,Puebla ,4
+42,24,Médico ,Puebla ,1
 43,31,Estudiante ,Tlaxcala,3
 44,21,Estudiante,Tlaxcala,3
 45,20,Estudiante,Tlaxcala ,1
