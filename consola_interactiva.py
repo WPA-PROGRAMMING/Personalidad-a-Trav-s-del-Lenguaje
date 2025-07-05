@@ -26,6 +26,7 @@ except ImportError as e:
 # --- 1. CONFIGURACIÓN GLOBAL Y CACHE DE MODELOS ---
 @st.cache_resource
 def load_models():
+    torch.cuda.empty_cache()
     """Carga el LabelEncoder y el modelo MLP."""
     st.info("Cargando modelos y objetos necesarios... Esto puede tomar un momento.")
     label_encoder = None
